@@ -6,16 +6,18 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType textInputType;
   final TextEditingController controller;
+  final Function(String)? onChanged;
   const CustomTextFormField(
       {super.key,
       required this.hintText,
       required this.textInputType,
-      required this.controller});
+      required this.controller, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onChanged: onChanged,
       validator: (value) {
         if (value != null && value.isEmpty) {
           return 'Required Field';
@@ -40,6 +42,13 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: const BorderSide(
             width: 1,
             color: Color(0xffFFF1D4),
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            width: 1,
+            color: Colors.red,
           ),
         ),
         errorBorder: OutlineInputBorder(

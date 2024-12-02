@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:contact_app/models/contact_model.dart';
+import 'package:contact_app/screens/contacts_screen.dart';
 import 'package:contact_app/styles/text_styles.dart';
 import 'package:contact_app/widgets/custom_divider.dart';
 import 'package:contact_app/widgets/custom_text_form_field.dart';
@@ -8,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 class BottomSheetWidget extends StatefulWidget {
-  BottomSheetWidget({super.key});
+  const BottomSheetWidget({super.key});
 
   @override
   State<BottomSheetWidget> createState() => _BottomSheetWidgetState();
@@ -16,13 +18,12 @@ class BottomSheetWidget extends StatefulWidget {
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   File? selectedImage;
-
+  GlobalKey<FormState> formKey = GlobalKey();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController phoneController = TextEditingController();
-    GlobalKey<FormState> formKey = GlobalKey();
     return Padding(
       padding: EdgeInsets.only(
         left: 16.0,
@@ -76,17 +77,23 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'User Name',
+                        nameController.text.isEmpty
+                            ? 'User Name'
+                            : nameController.text,
                         style: TextStyles.font16weight500,
                       ),
                       const CustomDivider(),
                       Text(
-                        'messi@gmail.com',
+                        emailController.text.isEmpty
+                            ? 'examble@gmail.com'
+                            : emailController.text,
                         style: TextStyles.font16weight500,
                       ),
                       const CustomDivider(),
                       Text(
-                        '+201002238716',
+                        phoneController.text.isEmpty
+                            ? '+201002238716'
+                            : phoneController.text,
                         style: TextStyles.font16weight500,
                       ),
                     ],
@@ -101,18 +108,30 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   CustomTextFormField(
+                    onChanged: (value) {
+                      nameController.text = value;
+                      setState(() {});
+                    },
                     controller: nameController,
                     textInputType: TextInputType.name,
                     hintText: 'Enter User Name',
                   ),
                   const SizedBox(height: 10),
                   CustomTextFormField(
+                    onChanged: (value) {
+                      emailController.text = value;
+                      setState(() {});
+                    },
                     controller: emailController,
                     textInputType: TextInputType.emailAddress,
                     hintText: 'Enter User Email',
                   ),
                   const SizedBox(height: 10),
                   CustomTextFormField(
+                    onChanged: (value) {
+                      phoneController.text = value;
+                      setState(() {});
+                    },
                     controller: phoneController,
                     textInputType: TextInputType.phone,
                     hintText: 'Enter User Phone',
@@ -127,7 +146,21 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       ),
                     ),
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {}
+                      if (formKey.currentState!.validate()) {
+                        Navigator.pop(context);
+                        setState(
+                          () {
+                            contactsList.add(
+                              ContactModel(
+                                image: selectedImage!,
+                                name: nameController.text,
+                                email: emailController.text,
+                                phone: phoneController.text,
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
                     child: Text(
                       'Enter User',

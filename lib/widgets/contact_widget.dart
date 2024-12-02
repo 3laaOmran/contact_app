@@ -1,11 +1,11 @@
-import 'package:contact_app/models/contact_model_and_list.dart';
+import 'package:contact_app/models/contact_model.dart';
 import 'package:flutter/material.dart';
 
 import '../styles/text_styles.dart';
 
 class ContactWidget extends StatelessWidget {
   final ContactModel contactModel;
-  const ContactWidget({super.key,required this.contactModel});
+  const ContactWidget({super.key, required this.contactModel});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ContactWidget extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16)),
-                  child: Image.asset(
+                  child: Image.file(
                     contactModel.image,
                     height: double.infinity,
                     width: double.infinity,
@@ -40,6 +40,8 @@ class ContactWidget extends StatelessWidget {
                   ),
                   child: Text(
                     contactModel.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyles.font14weight500,
                   ),
                 )
@@ -56,9 +58,13 @@ class ContactWidget extends StatelessWidget {
                   children: [
                     Image.asset('assets/images/email.png'),
                     const SizedBox(width: 10),
-                    Text(
-                      contactModel.email,
-                      style: TextStyles.font10weight500,
+                    Expanded(
+                      child: Text(
+                        contactModel.email,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyles.font10weight500,
+                      ),
                     ),
                   ],
                 ),
@@ -70,14 +76,19 @@ class ContactWidget extends StatelessWidget {
                   children: [
                     Image.asset('assets/images/phone.png'),
                     const SizedBox(width: 10),
-                    Text(
-                      contactModel.phone,
-                      style: TextStyles.font10weight500,
+                    Expanded(
+                      child: Text(
+                        contactModel.phone,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyles.font10weight500,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Padding(
+              Container(
+                height: 30,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

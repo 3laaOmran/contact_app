@@ -4,28 +4,20 @@ import 'package:contact_app/widgets/contact_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../models/contact_model_and_list.dart';
+import '../models/contact_model.dart';
 
-class ContactsScreen extends StatelessWidget {
+List<ContactModel> contactsList = [];
+
+class ContactsScreen extends StatefulWidget {
   static const String routeName = 'contacts_screen';
-  ContactsScreen({super.key});
+  const ContactsScreen({super.key});
 
-  final List<ContactModel> contactsList = [];
+  @override
+  State<ContactsScreen> createState() => _ContactsScreenState();
+}
 
-  // List<ContactModel> fakeContacts() {
-  //   for (var i = 1; i < 20; i++) {
-  //     contactsList.add(
-  //       ContactModel(
-  //         image: 'assets/images/osta_3bdo.jpg',
-  //         name: 'Osta $i',
-  //         email: 'osta3bdo@gmail.com',
-  //         phone: '+201002238716',
-  //       ),
-  //     );
-  //   }
-  //   return contactsList;
-  // }
-
+class _ContactsScreenState extends State<ContactsScreen> {
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +78,7 @@ class ContactsScreen extends StatelessWidget {
             isScrollControlled: true,
             context: context,
             backgroundColor: const Color(0xff29384D),
-            builder: (context) =>  BottomSheetWidget(),
+            builder: (context) => BottomSheetWidget(),
           );
         },
         backgroundColor: const Color(0xffFFF1D4),
