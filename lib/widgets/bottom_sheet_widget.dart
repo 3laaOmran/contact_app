@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:contact_app/models/contact_model.dart';
-import 'package:contact_app/screens/contacts_screen.dart';
 import 'package:contact_app/styles/text_styles.dart';
 import 'package:contact_app/widgets/custom_divider.dart';
 import 'package:contact_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
@@ -146,20 +146,31 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       ),
                     ),
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        Navigator.pop(context);
-                        setState(
-                          () {
-                            contactsList.add(
-                              ContactModel(
-                                image: selectedImage!,
-                                name: nameController.text,
-                                email: emailController.text,
-                                phone: phoneController.text,
-                              ),
-                            );
-                          },
+                      if (formKey.currentState!.validate() &&
+                          selectedImage != null) {
+
+                        ContactModel contact = ContactModel(
+                          image: selectedImage!,
+                          name: nameController.text,
+                          email: emailController.text,
+                          phone: phoneController.text,
                         );
+                        Navigator.pop(context,contact);
+                        Fluttertoast.showToast(
+                            msg: 'Contact Added Successfully',
+                            backgroundColor: Colors.green,
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            textColor: Colors.white,
+                            fontSize: 20.0);
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: 'Image Can not be empty',
+                            backgroundColor: Colors.red,
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            textColor: Colors.white,
+                            fontSize: 20.0);
                       }
                     },
                     child: Text(

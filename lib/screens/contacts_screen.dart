@@ -18,7 +18,6 @@ class ContactsScreen extends StatefulWidget {
 
 class _ContactsScreenState extends State<ContactsScreen> {
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff29384D),
@@ -73,13 +72,19 @@ class _ContactsScreenState extends State<ContactsScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
+        onPressed: () async {
+          final contact = await showModalBottomSheet<ContactModel>(
             isScrollControlled: true,
             context: context,
             backgroundColor: const Color(0xff29384D),
-            builder: (context) => BottomSheetWidget(),
+            builder: (context) => const BottomSheetWidget(),
           );
+
+          if (contact != null) {
+            setState(() {
+              contactsList.add(contact);
+            });
+          }
         },
         backgroundColor: const Color(0xffFFF1D4),
         child: const Icon(

@@ -56,7 +56,10 @@ class ContactWidget extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                 child: Row(
                   children: [
-                    Image.asset('assets/images/email.png'),
+                    const Icon(
+                      Icons.email_rounded,
+                      color: Color(0xff29384D),
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -74,7 +77,11 @@ class ContactWidget extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
                 child: Row(
                   children: [
-                    Image.asset('assets/images/phone.png'),
+                    const Icon(
+                      Icons.phone_in_talk_rounded,
+                      color: Color(0xff29384D),
+                      size: 20,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
