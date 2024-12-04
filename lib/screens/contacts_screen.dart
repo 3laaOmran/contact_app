@@ -1,20 +1,19 @@
 import 'package:contact_app/styles/text_styles.dart';
 import 'package:contact_app/widgets/bottom_sheet_widget.dart';
 import 'package:contact_app/widgets/contact_widget.dart';
+import 'package:contact_app/widgets/delete_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../models/contact_model.dart';
-
-List<ContactModel> contactsList = [];
 
 class ContactsScreen extends StatefulWidget {
   static const String routeName = 'contacts_screen';
   const ContactsScreen({super.key});
-
   @override
   State<ContactsScreen> createState() => _ContactsScreenState();
 }
+
+List<ContactModel> contactsList = [];
 
 class _ContactsScreenState extends State<ContactsScreen> {
   @override
@@ -48,8 +47,16 @@ class _ContactsScreenState extends State<ContactsScreen> {
                       itemBuilder: (context, index) => ContactWidget(
                         contactModel: contactsList[index],
                         onDeletePressed: () {
-                          contactsList.removeAt(index);
-                          setState(() {});
+                          showDialog(
+                              context: context,
+                              builder: (context) => DeleteAlertDialog(
+                                    content: 'Delete This Contact ?',
+                                    confirmDelete: () {
+                                      contactsList.removeAt(index);
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                  ));
                         },
                       ),
                     ),
@@ -82,8 +89,16 @@ class _ContactsScreenState extends State<ContactsScreen> {
           contactsList.isNotEmpty
               ? FloatingActionButton(
                   onPressed: () {
-                    contactsList.removeAt(contactsList.length - 1);
-                    setState(() {});
+                    showDialog(
+                        context: context,
+                        builder: (context) => DeleteAlertDialog(
+                              content: 'Delete Last Added Contact ?',
+                              confirmDelete: () {
+                                Navigator.pop(context);
+                                contactsList.removeAt(contactsList.length - 1);
+                                setState(() {});
+                              },
+                            ));
                   },
                   backgroundColor: Colors.red,
                   child: const Icon(

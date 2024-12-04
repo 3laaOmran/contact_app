@@ -93,7 +93,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       const CustomDivider(),
                       Text(
                         phoneController.text.isEmpty
-                            ? '+201002238716'
+                            ? '+200000000000'
                             : phoneController.text,
                         style: TextStyles.font16weight500,
                       ),
@@ -147,32 +147,33 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       ),
                     ),
                     onPressed: () {
-                      if (formKey.currentState!.validate() &&
-                          selectedImage != null) {
-                        Navigator.pop(context);
-                        contactsList.add(
-                          ContactModel(
-                            image: selectedImage!,
-                            name: nameController.text,
-                            email: emailController.text,
-                            phone: phoneController.text,
-                          ),
-                        );
-                        Fluttertoast.showToast(
-                            msg: 'Contact Added Successfully',
-                            backgroundColor: Colors.green,
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            textColor: Colors.white,
-                            fontSize: 20.0);
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'Image Can not be empty',
-                            backgroundColor: Colors.red,
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            textColor: Colors.white,
-                            fontSize: 20.0);
+                      if (formKey.currentState!.validate()) {
+                        if (selectedImage == null) {
+                          Fluttertoast.showToast(
+                              msg: 'Image Can not be empty',
+                              backgroundColor: Colors.red,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          Navigator.pop(context);
+                          contactsList.add(
+                            ContactModel(
+                              image: selectedImage!,
+                              name: nameController.text,
+                              email: emailController.text,
+                              phone: phoneController.text,
+                            ),
+                          );
+                          Fluttertoast.showToast(
+                              msg: 'Contact Added Successfully',
+                              backgroundColor: Colors.green,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
                       }
                     },
                     child: Text(

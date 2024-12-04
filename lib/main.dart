@@ -17,7 +17,7 @@ class ContactApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: ContactsScreen.routeName,
       routes: {
-        ContactsScreen.routeName : (context)=> ContactsScreen(),
+        ContactsScreen.routeName : (context)=> const ContactsScreen(),
       },
     );
   }
