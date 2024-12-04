@@ -11,6 +11,9 @@ class ContactApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Inter',
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: ContactsScreen.routeName,
       routes: {

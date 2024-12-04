@@ -5,7 +5,9 @@ import '../styles/text_styles.dart';
 
 class ContactWidget extends StatelessWidget {
   final ContactModel contactModel;
-  const ContactWidget({super.key, required this.contactModel});
+  final Function() onDeletePressed;
+  const ContactWidget(
+      {super.key, required this.contactModel, required this.onDeletePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -102,12 +104,16 @@ class ContactWidget extends StatelessWidget {
                       backgroundColor: const Color(0xffF93E3E),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
-                  onPressed: () {},
+                  onPressed: onDeletePressed,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/delete.png'),
-                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                      const SizedBox(width: 3),
                       Text(
                         'Delete',
                         style: TextStyles.font10weight500

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:contact_app/models/contact_model.dart';
+import 'package:contact_app/screens/contacts_screen.dart';
 import 'package:contact_app/styles/text_styles.dart';
 import 'package:contact_app/widgets/custom_divider.dart';
 import 'package:contact_app/widgets/custom_text_form_field.dart';
@@ -148,14 +149,15 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                     onPressed: () {
                       if (formKey.currentState!.validate() &&
                           selectedImage != null) {
-
-                        ContactModel contact = ContactModel(
-                          image: selectedImage!,
-                          name: nameController.text,
-                          email: emailController.text,
-                          phone: phoneController.text,
+                        Navigator.pop(context);
+                        contactsList.add(
+                          ContactModel(
+                            image: selectedImage!,
+                            name: nameController.text,
+                            email: emailController.text,
+                            phone: phoneController.text,
+                          ),
                         );
-                        Navigator.pop(context,contact);
                         Fluttertoast.showToast(
                             msg: 'Contact Added Successfully',
                             backgroundColor: Colors.green,

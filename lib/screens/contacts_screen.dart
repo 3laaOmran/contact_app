@@ -47,6 +47,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
                               childAspectRatio: 1 / 1.7),
                       itemBuilder: (context, index) => ContactWidget(
                         contactModel: contactsList[index],
+                        onDeletePressed: () {
+                          contactsList.removeAt(index);
+                          setState(() {});
+                        },
                       ),
                     ),
                   ),
@@ -55,7 +59,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                   child: Column(
                     children: [
                       Lottie.asset(
-                        'assets/animations/loading.json',
+                        'assets/animations/list_loading.json',
                         repeat: true,
                         fit: BoxFit.fill,
                         width: 250,
@@ -71,26 +75,49 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final contact = await showModalBottomSheet<ContactModel>(
-            isScrollControlled: true,
-            context: context,
-            backgroundColor: const Color(0xff29384D),
-            builder: (context) => const BottomSheetWidget(),
-          );
-
-          if (contact != null) {
-            setState(() {
-              contactsList.add(contact);
-            });
-          }
-        },
-        backgroundColor: const Color(0xffFFF1D4),
-        child: const Icon(
-          Icons.add,
-          size: 30,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          contactsList.isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: () {
+                    contactsList.removeAt(contactsList.length - 1);
+                    setState(() {});
+                  },
+                  backgroundColor: Colors.red,
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                )
+              : Container(),
+          contactsList.length != 6
+              ? Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    FloatingActionButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          backgroundColor: const Color(0xff29384D),
+                          builder: (context) => const BottomSheetWidget(),
+                        ).then((value) {
+                          return setState(() {});
+                        });
+                      },
+                      backgroundColor: const Color(0xffFFF1D4),
+                      child: const Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                )
+              : Container(),
+        ],
       ),
     );
   }
