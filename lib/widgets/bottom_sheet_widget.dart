@@ -62,7 +62,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                               ),
                             )
                           : Lottie.asset(
-                              'assets/animations/pick_image.json',
+                              'assets/animations/image_picker.json',
                               repeat: true,
                             ),
                     ),

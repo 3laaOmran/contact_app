@@ -66,7 +66,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                   child: Column(
                     children: [
                       Lottie.asset(
-                        'assets/animations/loading.json',
+                        'assets/animations/empty_list.json',
                         repeat: true,
                         fit: BoxFit.fill,
                         width: 250,
